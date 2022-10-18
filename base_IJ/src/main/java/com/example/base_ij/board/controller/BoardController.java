@@ -37,6 +37,7 @@ public class BoardController {
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+
     //patch
     @PatchMapping("/auth/boards/{id}")
     public ResponseEntity<Board> update(@PathVariable Long id, @RequestBody BoardRequestDto dto) {

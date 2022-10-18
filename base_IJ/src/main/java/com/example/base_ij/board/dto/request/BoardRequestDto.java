@@ -9,7 +9,7 @@ import lombok.ToString;
 public class BoardRequestDto {
 
 
-    private Long id;
+
     private String title;
     private String content;
 
@@ -17,6 +17,6 @@ public class BoardRequestDto {
 
 
     public Board toEntity() {
-        return new Board(id,title,content,nickname);
+        return new Board(title,content,nickname);
     }
 }
