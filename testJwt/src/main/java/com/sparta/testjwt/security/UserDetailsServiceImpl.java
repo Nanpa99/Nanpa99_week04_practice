@@ -1,6 +1,6 @@
 package com.sparta.testjwt.security;
 
-import com.sparta.testjwt.domain.User;
+import com.sparta.testjwt.entity.User;
 import com.sparta.testjwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
