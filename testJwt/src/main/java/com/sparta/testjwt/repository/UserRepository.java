@@ -1,6 +1,6 @@
 package com.sparta.testjwt.repository;
 
-import com.sparta.testjwt.domain.User;
+import com.sparta.testjwt.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

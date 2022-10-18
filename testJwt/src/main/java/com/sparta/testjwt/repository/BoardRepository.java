@@ -1,6 +1,6 @@
 package com.sparta.testjwt.repository;
 
-import com.sparta.testjwt.domain.Board;
+import com.sparta.testjwt.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {

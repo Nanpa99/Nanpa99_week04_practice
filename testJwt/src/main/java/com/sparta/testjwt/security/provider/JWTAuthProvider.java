@@ -1,7 +1,7 @@
 package com.sparta.testjwt.security.provider;
 
 
-import com.sparta.testjwt.domain.User;
+import com.sparta.testjwt.entity.User;
 import com.sparta.testjwt.repository.UserRepository;
 import com.sparta.testjwt.security.UserDetailsImpl;
 import com.sparta.testjwt.security.jwt.JwtDecoder;

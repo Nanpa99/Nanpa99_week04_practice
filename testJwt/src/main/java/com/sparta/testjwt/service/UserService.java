@@ -1,6 +1,6 @@
 package com.sparta.testjwt.service;
 
-import com.sparta.testjwt.domain.User;
+import com.sparta.testjwt.entity.User;
 import com.sparta.testjwt.dto.request.UserDto;
 import com.sparta.testjwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -130,6 +130,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("POST,/user/join");
 
         skipPathList.add("GET,/boards");
+        skipPathList.add("GET,/boards/{id}");
 
         skipPathList.add("GET,/");
         skipPathList.add("GET,/basic.js");
