@@ -1,4 +1,4 @@
-package com.example.base_ij.board.entity;
+package com.example.base_ij.jwt;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,16 +9,15 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@MappedSuperclass
 @Getter
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Timestemped {
+public abstract class Timestamped {
 
-    @CreatedDate
-    private LocalDateTime createdAt;
+  @CreatedDate
+  private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    private LocalDateTime modifitedAt;
-
+  @LastModifiedDate
+  private LocalDateTime modifiedAt;
 
 }

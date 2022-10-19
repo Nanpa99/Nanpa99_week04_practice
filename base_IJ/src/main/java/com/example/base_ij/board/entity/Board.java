@@ -1,59 +1,57 @@
 package com.example.base_ij.board.entity;
 
-//import com.example.base_ij.like.entity.Likes;
-import com.example.base_ij.like.entity.Likes;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.example.base_ij.board.dto.request.BoardRequestDto;
+import com.example.base_ij.comment.entity.Comment;
+import com.example.base_ij.jwt.Timestamped;
+import com.example.base_ij.members.entity.Member;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity//db가 인식하게 만든다 (해당클래스로 테이블을 만든다)
-@AllArgsConstructor//생성자
-@NoArgsConstructor//생성자에 변수가 없을때 값
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class Board extends Timestemped{
+@Setter
+@Entity
+@Builder
 
-    @Id//대표값지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY/*db가 자동으로 만들어줌)*/)//자동 생성
+public class Board extends Timestamped {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
-
-    @Column//db가 인식하게
+    @Column(nullable = false)
     private String title;
-
-    @Column
+    @Column(nullable = false)
     private String content;
-
-    @Column
+    @Column(nullable = false)
     private String nickname;
 
-//     total_like // -> cnt  //
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board")
-    private List<Likes> likes_lst = new ArrayList<>();
+    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
-
-
-    public void patch(Board board) {
-        if (board.title != null)
-            this.title = board.title;
-        if (board.content != null)
-            this.content = board.content;
+    public Board(BoardRequestDto requestDto){
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.nickname = requestDto.getNickname();
     }
 
-    public Board(String title, String content, String nickname) {
-        this.title = title;
-        this.content = content;
-        this.nickname = nickname;
+    public void boardUpdate(BoardRequestDto requestDto){
+        this.title = requestDto.getTitle() != null ? requestDto.getTitle() : this.title;
+        this.content = requestDto.getContent() != null ? requestDto.getContent() : this.title;
+        this.nickname = requestDto.getNickname() != null ? requestDto.getNickname() : this.title;
     }
-    public void addLike(Likes likes){
-        likes.setBoard(this);
-        this.likes_lst.add(likes);
 
-
+    public void addComment(Comment comment){
+        comment.setBoard(this);
+        this.comments.add(comment);
+    }
+    public boolean validateMember(Member member) {
+        return !this.member.equals(member);
     }
 }

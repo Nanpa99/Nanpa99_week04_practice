@@ -1,36 +1,43 @@
 package com.example.base_ij.comment.entity;
 
 
-import com.example.base_ij.board.entity.Timestemped;
+import com.example.base_ij.board.entity.Board;
 import com.example.base_ij.comment.dto.request.CommentRequestDto;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.base_ij.jwt.Timestamped;
+import com.example.base_ij.members.entity.Member;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @NoArgsConstructor
-public class Comment extends Timestemped {
+@Entity
+@Setter
+@Builder
+@AllArgsConstructor
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Comment extends Timestamped {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String nickname;
+    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
-    @Column
-    private String comments;
+    @JoinColumn(name = "board_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Board board;
 
-    public Comment(String nickname, String comments) {
-        this.nickname = nickname;
-        this.comments = comments;
+    @Column(nullable = false)
+    private String content;
+
+    public void update(CommentRequestDto commentRequestDto) {
+        this.content = commentRequestDto.getContent();
     }
 
-    public Comment(CommentRequestDto commentRequestDto){
-        this.nickname = commentRequestDto.getNickname();
-        this.comments = commentRequestDto.getComments();
+    public boolean validateMember(Member member) {
+        return !this.member.equals(member);
     }
-
 }
