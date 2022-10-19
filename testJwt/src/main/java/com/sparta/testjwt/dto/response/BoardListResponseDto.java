@@ -7,9 +7,8 @@ import java.util.List;
 
 @Getter
 public class BoardListResponseDto {
-    List<BoardResponseDto> boardResponseDtos = new LinkedList<>();
-
+    List<BoardResponseDto> boardList = new LinkedList<>();
     public void addBoard(BoardResponseDto boardResponseDto){
-        boardResponseDtos.add(boardResponseDto);
+        boardList.add(boardResponseDto);
     }
 }
