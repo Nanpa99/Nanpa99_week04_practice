@@ -5,9 +5,7 @@ import lombok.Getter;
 @Getter
 public class LikeRequestDto {
 
-    private boolean like_choice;
+    private Long boardId;
 
-//    private String likeA;
-
-
+//    private Long likeUserId;
 }

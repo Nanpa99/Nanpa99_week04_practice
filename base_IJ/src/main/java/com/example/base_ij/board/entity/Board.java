@@ -1,5 +1,6 @@
 package com.example.base_ij.board.entity;
 
+//import com.example.base_ij.like.entity.Likes;
 import com.example.base_ij.like.entity.Likes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +31,7 @@ public class Board extends Timestemped{
     @Column
     private String nickname;
 
-    // total_like // -> cnt  //
+//     total_like // -> cnt  //
 
     @OneToMany(mappedBy = "board")
     private List<Likes> likes_lst = new ArrayList<>();
@@ -48,5 +49,11 @@ public class Board extends Timestemped{
         this.title = title;
         this.content = content;
         this.nickname = nickname;
+    }
+    public void addLike(Likes likes){
+        likes.setBoard(this);
+        this.likes_lst.add(likes);
+
+
     }
 }
