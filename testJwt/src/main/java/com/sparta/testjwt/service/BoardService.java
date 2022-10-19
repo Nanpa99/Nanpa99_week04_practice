@@ -17,7 +17,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public BoardListResponseDto findAll() {
+    public BoardListResponseDto findBoards() {
         List<Board> boards = boardRepository.findAll();
         BoardListResponseDto boardListResponseDto = new BoardListResponseDto();
         for (Board board : boards){
@@ -28,7 +28,7 @@ public class BoardService {
 
     // id를 찾고 그 id에 있는 정보를 ResponseDto 에 담아 필요한 정보만 ResponseDto 타입으로 리턴 해주는 함수
     @Transactional // 메소드 동작이 SQL 쿼리문임을 선언합니다.
-    public BoardResponseDto findBoardId(Long id) {
+    public BoardResponseDto findBoard(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
         return new BoardResponseDto(board);
     }
