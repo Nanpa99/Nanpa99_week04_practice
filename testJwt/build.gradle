@@ -35,6 +35,9 @@ dependencies {
     implementation 'com.auth0:java-jwt:3.19.1'
 
     runtimeOnly 'com.h2database:h2'
+
+    // Vail
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {
