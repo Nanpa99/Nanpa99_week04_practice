@@ -1,4 +1,4 @@
-package com.sparta.testjwt.dto.response;
+package com.example.base_ij.board.dto.response;
 
 import lombok.Getter;
 
@@ -7,8 +7,10 @@ import java.util.List;
 
 @Getter
 public class BoardListResponseDto {
-    List<BoardResponseDto> boardList = new LinkedList<>();
+
+    List<BoardResponseDto> boardResponseDtos = new LinkedList<>();
+
     public void addBoard(BoardResponseDto boardResponseDto){
-        boardList.add(boardResponseDto);
+        boardResponseDtos.add(boardResponseDto);
     }
 }

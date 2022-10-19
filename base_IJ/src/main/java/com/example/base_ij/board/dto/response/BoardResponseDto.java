@@ -1,7 +1,7 @@
-package com.sparta.testjwt.dto.response;
+package com.example.base_ij.board.dto.response;
 
-import com.sparta.testjwt.entity.Board;
-import com.sparta.testjwt.entity.Comment;
+import com.example.base_ij.board.entity.Board;
+import com.example.base_ij.comment.entity.Comment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,13 +12,14 @@ import java.util.List;
 public class BoardResponseDto {
     private String title;
     private String content;
-    private String username;
-    private List<Comment> commentList;
+    private String nickname;
+    private List<Comment> comments;
 
     public BoardResponseDto(Board board) {
         this.title = board.getTitle();
         this.content = board.getContent();
-        this.username = board.getUsername();
-        this.commentList = board.getCommentList();
+        this.nickname = board.getNickname();
+        this.comments = board.getComments();
     }
+
 }
