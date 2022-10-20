@@ -1,4 +1,4 @@
 package com.example.base_ij.like.controller;
 
-public class LikeController {
+public class LikesController {
 }
