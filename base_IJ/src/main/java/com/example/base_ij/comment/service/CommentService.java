@@ -84,35 +84,47 @@ public class CommentService {
     }
 
     @Transactional
-    public GlobalResDto updateComment(Long id, CommentRequestDto requestDto, HttpServletRequest request) {
-        if (null == request.getHeader("Access_Token")) {
-            return new GlobalResDto("MEMBER_NOT_FOUND", HttpStatus.NOT_FOUND.value());
+    public ResponseDto<?> updateComment(Long id, CommentRequestDto requestDto, HttpServletRequest request) {
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail("MEMBER_NOT_FOUND",
+                    "로그인이 필요합니다.");
         }
 
-        if (null == request.getHeader("Refresh_Token")) {
-            return new GlobalResDto("MEMBER_NOT_FOUND", HttpStatus.NOT_FOUND.value());
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail("MEMBER_NOT_FOUND",
+                    "로그인이 필요합니다.");
         }
 
         Member member = validateMember(request);
         if (null == member) {
-            return new GlobalResDto("INVALID_TOKEN", HttpStatus.FORBIDDEN.value());
+            return ResponseDto.fail("INVALID_TOKEN", "Token이 유효하지 않습니다.");
         }
 
-        Board board = boardService.isPresentPost(requestDto.getBoardId());
-        if (null == board) {
-            return new GlobalResDto("NOT_FOUND", HttpStatus.NOT_FOUND.value());
+        Post post = postService.isPresentPost(requestDto.getPostId());
+        if (null == post) {
+            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
         Comment comment = isPresentComment(id);
         if (null == comment) {
-            return new GlobalResDto("NOT_FOUND", HttpStatus.NOT_FOUND.value());
+            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 댓글 id 입니다.");
         }
 
         if (comment.validateMember(member)) {
-            return new GlobalResDto("BAD_REQUEST", HttpStatus.BAD_REQUEST.value());
+            return ResponseDto.fail("BAD_REQUEST", "작성자만 수정할 수 있습니다.");
         }
 
         comment.update(requestDto);
+
+        return ResponseDto.success(
+                CommentResponseDto.builder()
+                        .id(comment.getId())
+                        .author(comment.getMember().getNickname())
+                        .content(comment.getContent())
+                        .createdAt(comment.getCreatedAt())
+                        .modifiedAt(comment.getModifiedAt())
+                        .build()
+        );
 
         return new GlobalResDto("Success Update Comment", HttpStatus.OK.value());
     }

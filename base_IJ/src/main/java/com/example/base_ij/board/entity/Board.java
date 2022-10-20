@@ -3,6 +3,7 @@ package com.example.base_ij.board.entity;
 import com.example.base_ij.board.dto.request.BoardRequestDto;
 import com.example.base_ij.comment.entity.Comment;
 import com.example.base_ij.jwt.Timestamped;
+import com.example.base_ij.likes.entity.Likes;
 import com.example.base_ij.members.entity.Member;
 import lombok.*;
 
@@ -35,6 +36,9 @@ public class Board extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Likes> likesList = new ArrayList<>();
+
     public Board(BoardRequestDto requestDto){
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
@@ -53,5 +57,10 @@ public class Board extends Timestamped {
     }
     public boolean validateMember(Member member) {
         return !this.member.equals(member);
+    }
+
+    public void addLikes(Likes likes){
+        likes.setBoard(this);
+        this.likesList.add(likes);
     }
 }

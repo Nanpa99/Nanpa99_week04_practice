@@ -2,7 +2,9 @@ package com.example.base_ij.comment.controller;
 import com.example.base_ij.comment.dto.request.CommentRequestDto;
 import com.example.base_ij.comment.service.CommentService;
 import com.example.base_ij.global.GlobalResDto;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.example.base_ij.members.dto.response.ResponsDto;
@@ -11,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 @Validated
 @RequiredArgsConstructor
 @RestController
+@Getter
+@Setter
+
 public class CommentController {
     private final CommentService commentService;
 

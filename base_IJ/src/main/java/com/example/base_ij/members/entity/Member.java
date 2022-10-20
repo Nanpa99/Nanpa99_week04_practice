@@ -1,15 +1,18 @@
 package com.example.base_ij.members.entity;
 
+import com.example.base_ij.likes.entity.Likes;
 import com.example.base_ij.members.dto.request.MemberRequestDto;
 import com.example.base_ij.jwt.Timestamped;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.Hibernate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -27,13 +30,18 @@ public class Member extends Timestamped {
     private String nickname;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String passwordConfirm;
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Likes> likesList = new ArrayList<>();
 
     public Member(MemberRequestDto memberRequestDto) {
         this.nickname = memberRequestDto.getNickname();
@@ -42,16 +50,9 @@ public class Member extends Timestamped {
         this.email = memberRequestDto.getEmail();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
-            return false;
-        }
-        Member member = (Member) o;
-        return id != null && Objects.equals(id, member.id);
+    public void addLikes(Likes likes){
+        likes.setMember(this);
+        this.likesList.add(likes);
     }
 
 }
