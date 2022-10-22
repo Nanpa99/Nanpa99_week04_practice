@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.base_ij.members.dto.response.ResponsDto;
 import javax.servlet.http.HttpServletRequest;
 
-@Validated
+//@Validated
 @RequiredArgsConstructor
 @RestController
 public class CommentController {
